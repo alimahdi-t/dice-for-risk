@@ -8,6 +8,7 @@ const SafeAreaView = styled(RNSafeAreaView);
 export default function Settings() {
     const [sound, setSound] = useState(true);
     const [vibration, setVibration] = useState(true);
+    const [language, setLanguage] = useState<"en" | "fa">("en");
 
     return (
         <SafeAreaView className="flex-1 bg-black p-5">
@@ -80,6 +81,57 @@ export default function Settings() {
                             ›
                         </Text>
                     </TouchableOpacity>
+                </View>
+            </View>
+
+            {/* Language */}
+            <View className="mb-6">
+                <Text className="mb-3 text-xs uppercase tracking-[3px] text-zinc-500">
+                    LANGUAGE
+                </Text>
+
+                <View className="rounded-3xl border border-zinc-800 bg-zinc-950 p-2">
+                    <View className="flex-row rounded-2xl bg-black">
+                        {/* English */}
+                        <TouchableOpacity
+                            onPress={() => setLanguage("en")}
+                            className={`flex-1 rounded-2xl py-4 ${
+                                language === "en"
+                                    ? "bg-white"
+                                    : "bg-transparent"
+                            }`}
+                        >
+                            <Text
+                                className={`text-center font-semibold ${
+                                    language === "en"
+                                        ? "text-black"
+                                        : "text-white"
+                                }`}
+                            >
+                                English
+                            </Text>
+                        </TouchableOpacity>
+
+                        {/* Persian */}
+                        <TouchableOpacity
+                            onPress={() => setLanguage("fa")}
+                            className={`flex-1 rounded-2xl py-4 ${
+                                language === "fa"
+                                    ? "bg-white"
+                                    : "bg-transparent"
+                            }`}
+                        >
+                            <Text
+                                className={`text-center font-semibold ${
+                                    language === "fa"
+                                        ? "text-black"
+                                        : "text-white"
+                                }`}
+                            >
+                                فارسی
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
 
