@@ -6,15 +6,22 @@ import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { useSettings } from "@/context/settings-context";
 
+const translations = {
+  en: {
+    game: "Game",
+    settings: "Settings",
+  },
+  fa: {
+    game: "بازی",
+    settings: "تنظیمات",
+  },
+} as const;
+
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
   const { language, theme } = useSettings();
 
-  // Lang
-  // const t = translations[language];
-  const isRTL = language === "fa";
-
-  // Theme
+  const t = translations[language];
   const isDark = theme === "dark";
 
   return (
@@ -29,7 +36,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: isDark ? "#71717a" : "#9ca3af",
 
         tabBarStyle: {
-          backgroundColor: isDark ? "#000" : "#fff",
+          backgroundColor: isDark ? "#000000" : "#ffffff",
           borderTopColor: isDark ? "#27272a" : "#e5e7eb",
           borderTopWidth: 1,
 
@@ -54,10 +61,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
-
+          title: t.game,
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="house.fill" color={color} />
+            <IconSymbol name="dice.fill" size={24} color={color} />
           ),
         }}
       />
@@ -65,10 +71,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
-
+          title: t.settings,
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={24} name="gearshape.fill" color={color} />
+            <IconSymbol name="gearshape.fill" size={24} color={color} />
           ),
         }}
       />
