@@ -1,13 +1,14 @@
-import {
+import React, {
     createContext,
     useContext,
     useState,
 } from "react";
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
 type ThemeContextType = {
     theme: Theme;
+    setTheme: (theme: Theme) => void;
     toggleTheme: () => void;
 };
 
@@ -26,13 +27,16 @@ export function ThemeProvider({
 
     const toggleTheme = () =>
         setTheme(t =>
-            t === "dark" ? "light" : "dark"
+            t === "dark"
+                ? "light"
+                : "dark"
         );
 
     return (
         <ThemeContext.Provider
             value={{
                 theme,
+                setTheme,
                 toggleTheme,
             }}
         >
@@ -41,5 +45,6 @@ export function ThemeProvider({
     );
 }
 
-export const useTheme = () =>
-    useContext(ThemeContext);
+export function useTheme() {
+    return useContext(ThemeContext);
+}

@@ -2,6 +2,7 @@ import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import {View, Text, TouchableOpacity, Switch, ScrollView} from "react-native";
 import { styled } from "react-native-css";
 import { useState } from "react";
+import {useTheme} from "@/context/theme-context";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -9,9 +10,11 @@ export default function Settings() {
     const [sound, setSound] = useState(true);
     const [vibration, setVibration] = useState(true);
     const [language, setLanguage] = useState<"en" | "fa">("en");
-    const [theme, setTheme] = useState<"dark" | "light">("dark");
+    const { theme, setTheme } =
+        useTheme();
 
-    const isDark = theme === "dark";
+    const isDark =
+        theme === "dark";
 
     const bg = isDark ? "bg-black" : "bg-white";
     const card = isDark ? "bg-zinc-950" : "bg-zinc-100";
