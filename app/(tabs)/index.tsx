@@ -15,55 +15,11 @@ import {
   DEFAULT_BATTLE,
 } from "@/utils/risk";
 import { useSettings } from "@/context/settings-context";
+import { getTranslations } from "@/i18n";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
-const translations = {
-  en: {
-    title: "⚔️ Risk Dice Roller",
-    attacker: "🔴 Attacker",
-    defender: "🔵 Defender",
-    troops: "troops",
-    attackerDice: "🔴 Attacker Dice",
-    defenderDice: "🔵 Defender Dice",
-    roll: "Roll Dice",
-    newBattle: "New Battle",
-    attack: "🔴 Attack",
-    defense: "🔵 Defense",
-    defenderLoses: (n: number) =>
-      `🔴 Defender loses ${n} troop${n > 1 ? "s" : ""}`,
-    attackerLoses: (n: number) =>
-      `🔵 Attacker loses ${n} troop${n > 1 ? "s" : ""}`,
-    attackerWins: "🔴 Attacker Wins!",
-    defenderWins: "🔵 Defender Wins!",
-    vs: "VS",
-    lang: "فارسی",
-  },
-  fa: {
-    title: "⚔️ تاس ریسک",
-    attacker: "🔴 مهاجم",
-    defender: "🔵 مدافع",
-    troops: "سرباز",
-    attackerDice: "🔴 تاس مهاجم",
-    defenderDice: "🔵 تاس مدافع",
-    roll: "پرتاب تاس",
-    newBattle: "نبرد جدید",
-    attack: "🔴 حمله",
-    defense: "🔵 دفاع",
-    defenderLoses: (n: number) => `🔴 مدافع ${n} سرباز از دست داد`,
-    attackerLoses: (n: number) => `🔵 مهاجم ${n} سرباز از دست داد`,
-    attackerWins: "🔴 مهاجم برنده شد!",
-    defenderWins: "🔵 مدافع برنده شد!",
-    vs: "در برابر",
-    lang: "English",
-  },
-};
-
-type Lang = "en" | "fa";
-
 export default function RiskDiceRoller() {
-  const [lang, setLang] = useState<Lang>("en");
-
   const [attackerTroops, setAttackerTroops] = useState(
     DEFAULT_BATTLE.attackerTroops,
   );
@@ -115,7 +71,7 @@ export default function RiskDiceRoller() {
   const { language, theme } = useSettings();
 
   // Lang
-  const t = translations[language];
+  const t = getTranslations(language).game;
   const isRTL = language === "fa";
 
   // Theme

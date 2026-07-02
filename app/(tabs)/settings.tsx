@@ -7,62 +7,9 @@ import SettingsSegment from "@/components/settings/settings-segments";
 import SettingsCard from "@/components/settings/settings-card";
 import SettingsRow from "@/components/settings/settings-row";
 import AboutRow from "@/components/settings/about-row";
+import { getTranslations } from "@/i18n";
 
 const SafeAreaView = styled(RNSafeAreaView);
-
-const translations = {
-  en: {
-    title: "Settings",
-
-    game: "GAME",
-    sound: "Sound Effects",
-    soundDesc: "Dice rolling sounds",
-
-    vibration: "Vibration",
-    vibrationDesc: "Haptic feedback",
-
-    appearance: "APPEARANCE",
-    dark: "Dark",
-    light: "Light",
-
-    language: "LANGUAGE",
-    english: "English",
-    persian: "فارسی",
-
-    about: "ABOUT",
-    rules: "Rules",
-    privacy: "Privacy",
-    version: "Version",
-
-    footer: "Risk Dice Roller",
-  },
-
-  fa: {
-    title: "تنظیمات",
-
-    game: "بازی",
-    sound: "افکت صدا",
-    soundDesc: "صدای پرتاب تاس",
-
-    vibration: "لرزش",
-    vibrationDesc: "بازخورد لمسی",
-
-    appearance: "ظاهر",
-    dark: "تاریک",
-    light: "روشن",
-
-    language: "زبان",
-    english: "English",
-    persian: "فارسی",
-
-    about: "درباره",
-    rules: "قوانین",
-    privacy: "حریم خصوصی",
-    version: "نسخه",
-
-    footer: "تاس ریسک",
-  },
-} as const;
 
 export default function Settings() {
   const {
@@ -76,7 +23,7 @@ export default function Settings() {
     setTheme,
   } = useSettings();
 
-  const t = translations[language];
+  const t = getTranslations(language).settings;
   const isRTL = language === "fa";
 
   return (

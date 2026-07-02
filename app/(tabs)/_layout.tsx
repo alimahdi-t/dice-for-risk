@@ -5,23 +5,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { useSettings } from "@/context/settings-context";
-
-const translations = {
-  en: {
-    game: "Game",
-    settings: "Settings",
-  },
-  fa: {
-    game: "بازی",
-    settings: "تنظیمات",
-  },
-} as const;
+import { getTranslations } from "@/i18n";
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
   const { language, theme } = useSettings();
 
-  const t = translations[language];
+  const t = getTranslations(language).tabs;
   const isDark = theme === "dark";
 
   return (
