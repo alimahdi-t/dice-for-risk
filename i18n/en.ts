@@ -48,4 +48,25 @@ export default {
 
     footer: "Risk Dice Roller",
   },
+
+  rulesPage: {
+    title: "Rules",
+    content: [
+      "Attacker may roll up to three dice.",
+      "Defender may roll up to two dice.",
+      "Compare highest dice first.",
+      "Defender wins ties.",
+    ],
+  },
+
+  privacyPage: {
+    title: "Privacy Policy",
+    content: [
+      "This app does not collect any personal information.",
+      "No account creation is required.",
+      "Your settings are stored locally on your device.",
+      "No data is shared with third parties.",
+      "No analytics or tracking services are used.",
+    ],
+  },
 } as const;

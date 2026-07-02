@@ -8,6 +8,7 @@ import SettingsCard from "@/components/settings/settings-card";
 import SettingsRow from "@/components/settings/settings-row";
 import AboutRow from "@/components/settings/about-row";
 import { getTranslations } from "@/i18n";
+import { router } from "expo-router";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -28,7 +29,7 @@ export default function Settings() {
 
   return (
     <SafeAreaView
-      className={`flex-1  mt-12 bg-white dark:bg-black`}
+      className={`flex-1  pt-12 bg-white dark:bg-black`}
       edges={["left", "right", "top"]}
       style={{ paddingHorizontal: 20 }}
     >
@@ -104,13 +105,18 @@ export default function Settings() {
 
         <SettingsSection title={t.about} isRTL={isRTL}>
           <SettingsCard>
-            <AboutRow title={t.rules} border isRTL={isRTL} onPress={() => {}} />
+            <AboutRow
+              title={t.rules}
+              border
+              isRTL={isRTL}
+              onPress={() => router.push("/rules")}
+            />
 
             <AboutRow
               title={t.privacy}
               border
               isRTL={isRTL}
-              onPress={() => {}}
+              onPress={() => router.push("/privacy")}
             />
 
             <AboutRow title={t.version} value="1.0.0" isRTL={isRTL} />
