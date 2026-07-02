@@ -5,6 +5,7 @@ import { styled } from "react-native-css";
 import { useTheme } from "@/context/theme-context";
 import TroopCard from "@/components/troop-card";
 import DiceSelector from "@/components/dice-selector";
+import ResultPanel from "@/components/result-panel";
 const SafeAreaView = styled(RNSafeAreaView);
 
 const translations = {
@@ -244,63 +245,22 @@ export default function RiskDiceRoller() {
 
         {/* Results */}
         {result && (
-          <View className="mt-6 items-center w-full">
-            <View
-              className={`flex-row justify-around w-full mb-4 ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
-            >
-              <View className="items-center gap-1">
-                <Text
-                  className={`text-[#aaa] text-base ${
-                    isRTL ? "text-right" : ""
-                  }`}
-                >
-                  {t.attack}
-                </Text>
-                {result.attacker.map((d, i) => (
-                  <Text key={i} className="text-5xl">
-                    {getDiceFace(d)}
-                  </Text>
-                ))}
-              </View>
-              <View className="items-center gap-1">
-                <Text
-                  className={`text-[#aaa] text-base ${
-                    isRTL ? "text-right" : ""
-                  }`}
-                >
-                  {t.defense}
-                </Text>
-                {result.defender.map((d, i) => (
-                  <Text key={i} className="text-5xl">
-                    {getDiceFace(d)}
-                  </Text>
-                ))}
-              </View>
-            </View>
-
-            <View className="gap-2 items-center">
-              {result.defenderLosses > 0 && (
-                <Text
-                  className={`text-[#ff6b6b] text-base font-bold ${
-                    isRTL ? "text-right" : ""
-                  }`}
-                >
-                  {t.defenderLoses(result.defenderLosses)}
-                </Text>
-              )}
-              {result.attackerLosses > 0 && (
-                <Text
-                  className={`text-[#4ecdc4] text-base font-bold ${
-                    isRTL ? "text-right" : ""
-                  }`}
-                >
-                  {t.attackerLoses(result.attackerLosses)}
-                </Text>
-              )}
-            </View>
-          </View>
+          <ResultPanel
+            result={result}
+            attackLabel={t.attack}
+            defenseLabel={t.defense}
+            defenderLosesText={
+              result.defenderLosses > 0
+                ? t.defenderLoses(result.defenderLosses)
+                : null
+            }
+            attackerLosesText={
+              result.attackerLosses > 0
+                ? t.attackerLoses(result.attackerLosses)
+                : null
+            }
+            isRTL={isRTL}
+          />
         )}
       </ScrollView>
     </SafeAreaView>
