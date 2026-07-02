@@ -1,26 +1,55 @@
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import "react-native-reanimated";
+import "./global.css";
+import { SettingsProvider, useSettings } from "@/context/settings-context";
+import { useColorScheme } from "nativewind";
+import { useEffect } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-import "./global.css"
+function ThemeSync() {
+  const { theme } = useSettings();
+  const { colorScheme, setColorScheme } = useColorScheme();
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import {ThemeProvider} from "@/context/theme-context";
+  useEffect(() => {
+    // console.log("syncing", theme);
+    if (colorScheme !== theme) {
+      setColorScheme(theme);
+    }
+  }, [theme, colorScheme]);
+  // console.log("nativewind:", colorScheme);
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+  return null;
+}
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+function AppLayout() {
+  const { theme } = useSettings();
 
   return (
-    <ThemeProvider>
+    <>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+        <Stack.Screen
+          name="modal"
+          options={{
+            presentation: "modal",
+            title: "Modal",
+          }}
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+
+      <StatusBar style={theme === "dark" ? "light" : "dark"} />
+    </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <SafeAreaProvider>
+      <SettingsProvider>
+        <ThemeSync />
+        <AppLayout />
+      </SettingsProvider>
+    </SafeAreaProvider>
   );
 }

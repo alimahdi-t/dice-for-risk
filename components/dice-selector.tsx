@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useTheme } from "@/context/theme-context";
+import { useSettings } from "@/context/settings-context";
 
 type DiceSelectorProps = {
   title: string;
@@ -18,7 +18,7 @@ export default function DiceSelector({
   onSelect,
   isRTL = false,
 }: DiceSelectorProps) {
-  const { theme } = useTheme();
+  const { theme } = useSettings();
 
   const isDark = theme === "dark";
 

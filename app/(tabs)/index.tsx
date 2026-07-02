@@ -2,7 +2,6 @@ import { useState } from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { styled } from "react-native-css";
-import { useTheme } from "@/context/theme-context";
 import TroopCard from "@/components/troop-card";
 import DiceSelector from "@/components/dice-selector";
 import ResultPanel from "@/components/result-panel";
@@ -15,6 +14,7 @@ import {
   getWinner,
   DEFAULT_BATTLE,
 } from "@/utils/risk";
+import { useSettings } from "@/context/settings-context";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -85,9 +85,6 @@ export default function RiskDiceRoller() {
   const [result, setResult] = useState<RollResult | null>(null);
   const [battleOver, setBattleOver] = useState(false);
 
-  const t = translations[lang];
-  const isRTL = lang === "fa";
-
   const handleRoll = () => {
     if (battleOver) return;
 
@@ -114,8 +111,14 @@ export default function RiskDiceRoller() {
     setBattleOver(false);
   };
 
-  const { theme } = useTheme();
+  // ---------------------
+  const { language, theme } = useSettings();
 
+  // Lang
+  const t = translations[language];
+  const isRTL = language === "fa";
+
+  // Theme
   const isDark = theme === "dark";
 
   const canRoll = !battleOver && attackerTroops > 1 && defenderTroops > 0;

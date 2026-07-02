@@ -1,105 +1,77 @@
 import React from "react";
 import { Tabs } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-
-import { useTheme } from "@/context/theme-context";
+import { useSettings } from "@/context/settings-context";
 
 export default function TabLayout() {
-    const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
+  const { language, theme } = useSettings();
 
-    const isDark =
-        theme === "dark";
+  // Lang
+  // const t = translations[language];
+  const isRTL = language === "fa";
 
-    return (
-        <Tabs
-            key={theme}
-            screenOptions={{
-                headerShown: false,
+  // Theme
+  const isDark = theme === "dark";
 
-                tabBarButton: HapticTab,
+  return (
+    <Tabs
+      screenOptions={{
+        headerShown: false,
 
-                tabBarActiveTintColor:
-                    isDark
-                        ? "#ffffff"
-                        : "#000000",
+        tabBarButton: HapticTab,
 
-                tabBarInactiveTintColor:
-                    isDark
-                        ? "#71717a"
-                        : "#9ca3af",
+        tabBarActiveTintColor: isDark ? "#ffffff" : "#000000",
 
-                tabBarStyle: {
-                    backgroundColor:
-                        isDark
-                            ? "#000000"
-                            : "#ffffff",
+        tabBarInactiveTintColor: isDark ? "#71717a" : "#9ca3af",
 
-                    borderTopColor:
-                        isDark
-                            ? "#27272a"
-                            : "#e5e7eb",
+        tabBarStyle: {
+          backgroundColor: isDark ? "#000" : "#fff",
+          borderTopColor: isDark ? "#27272a" : "#e5e7eb",
+          borderTopWidth: 1,
 
-                    borderTopWidth: 1,
+          height: 60 + insets.bottom,
+          paddingTop: 8,
+          paddingBottom: Math.max(8, insets.bottom),
 
-                    height: 70,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
 
-                    paddingTop: 8,
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+        },
 
-                    paddingBottom: 8,
+        sceneStyle: {
+          backgroundColor: isDark ? "#000000" : "#ffffff",
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
 
-                    elevation: 0,
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={24} name="house.fill" color={color} />
+          ),
+        }}
+      />
 
-                    shadowOpacity: 0,
-                },
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: "Settings",
 
-                tabBarLabelStyle: {
-                    fontSize: 12,
-                    fontWeight: "600",
-                },
-
-                sceneStyle: {
-                    backgroundColor:
-                        isDark
-                            ? "#000000"
-                            : "#ffffff",
-                },
-            }}
-        >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: "Home",
-
-                    tabBarIcon: ({
-                                     color,
-                                 }) => (
-                        <IconSymbol
-                            size={24}
-                            name="house.fill"
-                            color={color}
-                        />
-                    ),
-                }}
-            />
-
-            <Tabs.Screen
-                name="settings"
-                options={{
-                    title: "Settings",
-
-                    tabBarIcon: ({
-                                     color,
-                                 }) => (
-                        <IconSymbol
-                            size={24}
-                            name="gearshape.fill"
-                            color={color}
-                        />
-                    ),
-                }}
-            />
-        </Tabs>
-    );
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={24} name="gearshape.fill" color={color} />
+          ),
+        }}
+      />
+    </Tabs>
+  );
 }

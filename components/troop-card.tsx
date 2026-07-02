@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useTheme } from "@/context/theme-context";
+
+import { useSettings } from "@/context/settings-context";
 
 type TroopCardProps = {
   title: string;
@@ -22,7 +23,7 @@ export default function TroopCard({
   onIncrease,
   onDecrease,
 }: TroopCardProps) {
-  const { theme } = useTheme();
+  const { theme } = useSettings();
 
   const isDark = theme === "dark";
 
