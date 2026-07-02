@@ -123,14 +123,20 @@ export default function RiskDiceRoller() {
 
   const canRoll = !battleOver && attackerTroops > 1 && defenderTroops > 0;
 
-  const bg = isDark ? "bg-black" : "bg-white";
   const textColor = isDark ? "text-white" : "text-black";
 
   return (
-    <SafeAreaView className={`flex-1 p-5 ${bg}`}>
+    <SafeAreaView
+      className={`flex-1  mt-12 bg-white dark:bg-black`}
+      edges={["left", "right", "top"]}
+      style={{ paddingHorizontal: 20 }}
+    >
       <ScrollView
         className="flex-1 w-full"
-        contentContainerClassName="items-center pb-12"
+        contentContainerStyle={{
+          flexGrow: 1,
+          alignItems: "center",
+        }}
         showsVerticalScrollIndicator={false}
       >
         {/* Title */}
@@ -238,24 +244,26 @@ export default function RiskDiceRoller() {
         )}
 
         {/* Results */}
-        {result && (
-          <ResultPanel
-            result={result}
-            attackLabel={t.attack}
-            defenseLabel={t.defense}
-            defenderLosesText={
-              result.defenderLosses > 0
-                ? t.defenderLoses(result.defenderLosses)
-                : null
-            }
-            attackerLosesText={
-              result.attackerLosses > 0
-                ? t.attackerLoses(result.attackerLosses)
-                : null
-            }
-            isRTL={isRTL}
-          />
-        )}
+        <View className="w-full mb-16">
+          {result && (
+            <ResultPanel
+              result={result}
+              attackLabel={t.attack}
+              defenseLabel={t.defense}
+              defenderLosesText={
+                result.defenderLosses > 0
+                  ? t.defenderLoses(result.defenderLosses)
+                  : null
+              }
+              attackerLosesText={
+                result.attackerLosses > 0
+                  ? t.attackerLoses(result.attackerLosses)
+                  : null
+              }
+              isRTL={isRTL}
+            />
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

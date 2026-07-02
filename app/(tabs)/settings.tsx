@@ -1,9 +1,68 @@
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { View, Text, TouchableOpacity, Switch, ScrollView } from "react-native";
+import { Text, Switch, ScrollView } from "react-native";
 import { styled } from "react-native-css";
 import { useSettings } from "@/context/settings-context";
+import SettingsSection from "@/components/settings/settings-sections";
+import SettingsSegment from "@/components/settings/settings-segments";
+import SettingsCard from "@/components/settings/settings-card";
+import SettingsRow from "@/components/settings/settings-row";
+import AboutRow from "@/components/settings/about-row";
 
 const SafeAreaView = styled(RNSafeAreaView);
+
+const translations = {
+  en: {
+    title: "Settings",
+
+    game: "GAME",
+    sound: "Sound Effects",
+    soundDesc: "Dice rolling sounds",
+
+    vibration: "Vibration",
+    vibrationDesc: "Haptic feedback",
+
+    appearance: "APPEARANCE",
+    dark: "Dark",
+    light: "Light",
+
+    language: "LANGUAGE",
+    english: "English",
+    persian: "فارسی",
+
+    about: "ABOUT",
+    rules: "Rules",
+    privacy: "Privacy",
+    version: "Version",
+
+    footer: "Risk Dice Roller",
+  },
+
+  fa: {
+    title: "تنظیمات",
+
+    game: "بازی",
+    sound: "افکت صدا",
+    soundDesc: "صدای پرتاب تاس",
+
+    vibration: "لرزش",
+    vibrationDesc: "بازخورد لمسی",
+
+    appearance: "ظاهر",
+    dark: "تاریک",
+    light: "روشن",
+
+    language: "زبان",
+    english: "English",
+    persian: "فارسی",
+
+    about: "درباره",
+    rules: "قوانین",
+    privacy: "حریم خصوصی",
+    version: "نسخه",
+
+    footer: "تاس ریسک",
+  },
+} as const;
 
 export default function Settings() {
   const {
@@ -17,208 +76,103 @@ export default function Settings() {
     setTheme,
   } = useSettings();
 
-  const isDark = theme === "dark";
-
-  const bg = isDark ? "bg-black" : "bg-white";
-  const card = isDark ? "bg-zinc-950" : "bg-zinc-100";
-  const border = isDark ? "border-zinc-800" : "border-zinc-200";
-  const text = isDark ? "text-white" : "text-black";
-  const subtext = isDark ? "text-zinc-500" : "text-zinc-600";
-  const chevron = isDark ? "text-zinc-600" : "text-zinc-400";
+  const t = translations[language];
+  const isRTL = language === "fa";
 
   return (
-    <SafeAreaView className={`flex-1 p-5 ${bg}`}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView
+      className={`flex-1  mt-12 bg-white dark:bg-black`}
+      edges={["left", "right", "top"]}
+      style={{ paddingHorizontal: 20 }}
+    >
+      <ScrollView
+        className="pb-4"
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "space-between",
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Header */}
-        <Text className={`mb-8 text-4xl font-bold ${text}`}>Settings</Text>
+        <Text
+          className={`text-4xl font-bold text-black dark:text-white ${
+            isRTL ? "text-right" : ""
+          }`}
+        >
+          {t.title}
+        </Text>
 
-        {/* GAME */}
-        <View className="mb-6">
-          <Text className={`mb-3 text-xs uppercase tracking-[3px] ${subtext}`}>
-            GAME
-          </Text>
+        <SettingsSection title={t.game} isRTL={isRTL}>
+          <SettingsCard>
+            <SettingsRow
+              title={t.sound}
+              subtitle={t.soundDesc}
+              border
+              isRTL={isRTL}
+              right={<Switch value={sound} onValueChange={setSound} />}
+            />
 
-          <View
-            className={`overflow-hidden rounded-3xl border ${border} ${card}`}
-          >
-            {/* Sound */}
-            <View
-              className={`flex-row items-center justify-between border-b ${border} px-5 py-5`}
-            >
-              <View>
-                <Text className={`text-lg font-semibold ${text}`}>
-                  Sound Effects
-                </Text>
-                <Text className={`mt-1 text-sm ${subtext}`}>
-                  Dice rolling sounds
-                </Text>
-              </View>
+            <SettingsRow
+              title={t.vibration}
+              subtitle={t.vibrationDesc}
+              isRTL={isRTL}
+              right={<Switch value={vibration} onValueChange={setVibration} />}
+            />
+          </SettingsCard>
+        </SettingsSection>
 
-              <Switch value={sound} onValueChange={setSound} />
-            </View>
+        <SettingsSection title={t.appearance} isRTL={isRTL}>
+          <SettingsSegment
+            value={theme}
+            onChange={setTheme}
+            options={[
+              {
+                label: t.dark,
+                value: "dark",
+              },
+              {
+                label: t.light,
+                value: "light",
+              },
+            ]}
+          />
+        </SettingsSection>
 
-            {/* Vibration */}
-            <View className="flex-row items-center justify-between px-5 py-5">
-              <View>
-                <Text className={`text-lg font-semibold ${text}`}>
-                  Vibration
-                </Text>
-                <Text className={`mt-1 text-sm ${subtext}`}>
-                  Haptic feedback
-                </Text>
-              </View>
+        <SettingsSection title={t.language} isRTL={isRTL}>
+          <SettingsSegment
+            value={language}
+            onChange={setLanguage}
+            options={[
+              {
+                label: t.english,
+                value: "en",
+              },
+              {
+                label: t.persian,
+                value: "fa",
+              },
+            ]}
+          />
+        </SettingsSection>
 
-              <Switch value={vibration} onValueChange={setVibration} />
-            </View>
-          </View>
-        </View>
+        <SettingsSection title={t.about} isRTL={isRTL}>
+          <SettingsCard>
+            <AboutRow title={t.rules} border isRTL={isRTL} onPress={() => {}} />
 
-        {/* APPEARANCE */}
-        <View className="mb-6">
-          <Text className={`mb-3 text-xs uppercase tracking-[3px] ${subtext}`}>
-            APPEARANCE
-          </Text>
+            <AboutRow
+              title={t.privacy}
+              border
+              isRTL={isRTL}
+              onPress={() => {}}
+            />
 
-          <View className={`rounded-3xl border p-2 ${border} ${card}`}>
-            <View
-              className={`flex-row rounded-2xl ${
-                isDark ? "bg-black" : "bg-white"
-              }`}
-            >
-              {/* Dark */}
-              <TouchableOpacity
-                onPress={() => setTheme("dark")}
-                className={`flex-1 rounded-2xl py-4 ${
-                  theme === "dark" ? "bg-white" : "bg-transparent"
-                }`}
-              >
-                <Text
-                  className={`text-center font-semibold ${
-                    theme === "dark" ? "text-black" : text
-                  }`}
-                >
-                  Dark
-                </Text>
-              </TouchableOpacity>
-
-              {/* Light */}
-              <TouchableOpacity
-                onPress={() => setTheme("light")}
-                className={`flex-1 rounded-2xl py-4 ${
-                  theme === "light" ? "bg-black" : "bg-transparent"
-                }`}
-              >
-                <Text
-                  className={`text-center font-semibold ${
-                    theme === "light" ? "text-white" : text
-                  }`}
-                >
-                  Light
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        {/* LANGUAGE */}
-        <View className="mb-6">
-          <Text className={`mb-3 text-xs uppercase tracking-[3px] ${subtext}`}>
-            LANGUAGE
-          </Text>
-
-          <View className={`rounded-3xl border p-2 ${border} ${card}`}>
-            <View
-              className={`flex-row rounded-2xl ${
-                isDark ? "bg-black" : "bg-white"
-              }`}
-            >
-              {/* English */}
-              <TouchableOpacity
-                onPress={() => setLanguage("en")}
-                className={`flex-1 rounded-2xl py-4 ${
-                  language === "en"
-                    ? isDark
-                      ? "bg-white"
-                      : "bg-black"
-                    : "bg-transparent"
-                }`}
-              >
-                <Text
-                  className={`text-center font-semibold ${
-                    language === "en"
-                      ? isDark
-                        ? "text-black"
-                        : "text-white"
-                      : text
-                  }`}
-                >
-                  English
-                </Text>
-              </TouchableOpacity>
-
-              {/* Persian */}
-              <TouchableOpacity
-                onPress={() => setLanguage("fa")}
-                className={`flex-1 rounded-2xl py-4 ${
-                  language === "fa"
-                    ? isDark
-                      ? "bg-white"
-                      : "bg-black"
-                    : "bg-transparent"
-                }`}
-              >
-                <Text
-                  className={`text-center font-semibold ${
-                    language === "fa"
-                      ? isDark
-                        ? "text-black"
-                        : "text-white"
-                      : text
-                  }`}
-                >
-                  فارسی
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
-        {/* ABOUT */}
-        <View>
-          <Text className={`mb-3 text-xs uppercase tracking-[3px] ${subtext}`}>
-            ABOUT
-          </Text>
-
-          <View
-            className={`overflow-hidden rounded-3xl border ${border} ${card}`}
-          >
-            <TouchableOpacity
-              className={`flex-row items-center justify-between border-b ${border} px-5 py-5`}
-            >
-              <Text className={`text-lg ${text}`}>Rules</Text>
-
-              <Text className={`text-2xl ${chevron}`}>›</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              className={`flex-row items-center justify-between border-b ${border} px-5 py-5`}
-            >
-              <Text className={`text-lg ${text}`}>Privacy</Text>
-
-              <Text className={`text-2xl ${chevron}`}>›</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity className="flex-row items-center justify-between px-5 py-5">
-              <Text className={`text-lg ${text}`}>Version</Text>
-
-              <Text className={subtext}>1.0.0</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+            <AboutRow title={t.version} value="1.0.0" isRTL={isRTL} />
+          </SettingsCard>
+        </SettingsSection>
 
         {/* Footer */}
-        <Text className={`my-6 text-center text-sm ${subtext}`}>
-          Risk Dice Roller
+        <Text className="my-6 text-center text-sm text-zinc-600 dark:text-zinc-500">
+          {t.footer}
         </Text>
       </ScrollView>
     </SafeAreaView>
