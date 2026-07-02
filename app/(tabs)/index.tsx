@@ -4,6 +4,7 @@ import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { styled } from "react-native-css";
 import { useTheme } from "@/context/theme-context";
 import TroopCard from "@/components/troop-card";
+import DiceSelector from "@/components/dice-selector";
 const SafeAreaView = styled(RNSafeAreaView);
 
 const translations = {
@@ -190,59 +191,23 @@ export default function RiskDiceRoller() {
         {/* Dice selectors */}
         {!battleOver && (
           <>
-            <View className="mb-4 items-center w-full">
-              <Text
-                className={`text-[#aaa] text-base mb-2 ${
-                  isRTL ? "text-right" : ""
-                }`}
-              >
-                {t.attackerDice}
-              </Text>
-              <View className="flex-row gap-3">
-                {[1, 2, 3]
-                  .filter((n) => n <= maxAttackerDice)
-                  .map((n) => (
-                    <TouchableOpacity
-                      key={n}
-                      className={`w-12 h-12 rounded-full border-2 items-center justify-center ${
-                        attackerCount === n
-                          ? "border-[#e94560] bg-[#e9456022]"
-                          : "border-[#444]"
-                      }`}
-                      onPress={() => setAttackerCount(n)}
-                    >
-                      <Text className="text-white text-lg font-bold">{n}</Text>
-                    </TouchableOpacity>
-                  ))}
-              </View>
-            </View>
+            <DiceSelector
+              title={t.attackerDice}
+              options={[1, 2, 3]}
+              selected={attackerCount}
+              max={maxAttackerDice}
+              onSelect={setAttackerCount}
+              isRTL={isRTL}
+            />
 
-            <View className="mb-4 items-center w-full">
-              <Text
-                className={`text-[#aaa] text-base mb-2 ${
-                  isRTL ? "text-right" : ""
-                }`}
-              >
-                {t.defenderDice}
-              </Text>
-              <View className="flex-row gap-3">
-                {[1, 2]
-                  .filter((n) => n <= maxDefenderDice)
-                  .map((n) => (
-                    <TouchableOpacity
-                      key={n}
-                      className={`w-12 h-12 rounded-full border-2 items-center justify-center ${
-                        defenderCount === n
-                          ? "border-[#4ecdc4] bg-[#4ecdc422]"
-                          : "border-[#444]"
-                      }`}
-                      onPress={() => setDefenderCount(n)}
-                    >
-                      <Text className="text-white text-lg font-bold">{n}</Text>
-                    </TouchableOpacity>
-                  ))}
-              </View>
-            </View>
+            <DiceSelector
+              title={t.defenderDice}
+              options={[1, 2]}
+              selected={defenderCount}
+              max={maxDefenderDice}
+              onSelect={setDefenderCount}
+              isRTL={isRTL}
+            />
           </>
         )}
 
