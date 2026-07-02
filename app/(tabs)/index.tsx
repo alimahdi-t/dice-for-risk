@@ -6,6 +6,16 @@ import { useTheme } from "@/context/theme-context";
 import TroopCard from "@/components/troop-card";
 import DiceSelector from "@/components/dice-selector";
 import ResultPanel from "@/components/result-panel";
+import {
+  type RollResult,
+  playBattle,
+  getMaxAttackerDice,
+  getMaxDefenderDice,
+  isBattleOver,
+  getWinner,
+  DEFAULT_BATTLE,
+} from "@/utils/risk";
+
 const SafeAreaView = styled(RNSafeAreaView);
 
 const translations = {
@@ -50,76 +60,56 @@ const translations = {
 };
 
 type Lang = "en" | "fa";
-type RollResult = {
-  attacker: number[];
-  defender: number[];
-  attackerLosses: number;
-  defenderLosses: number;
-};
-
-const rollDice = (count: number): number[] =>
-  Array.from({ length: count }, () => Math.floor(Math.random() * 6) + 1).sort(
-    (a, b) => b - a,
-  );
-
-const compareRolls = (
-  attackerDice: number[],
-  defenderDice: number[],
-): RollResult => {
-  const pairs = Math.min(attackerDice.length, defenderDice.length);
-  let attackerLosses = 0;
-  let defenderLosses = 0;
-  for (let i = 0; i < pairs; i++) {
-    if (attackerDice[i] > defenderDice[i]) defenderLosses++;
-    else attackerLosses++;
-  }
-  return {
-    attacker: attackerDice,
-    defender: defenderDice,
-    attackerLosses,
-    defenderLosses,
-  };
-};
-
-const getDiceFace = (n: number) => ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"][n - 1];
 
 export default function RiskDiceRoller() {
   const [lang, setLang] = useState<Lang>("en");
 
-  // Troops
-  const [attackerTroops, setAttackerTroops] = useState(10);
-  const [defenderTroops, setDefenderTroops] = useState(10);
-  const [attackerCount, setAttackerCount] = useState(3);
-  const [defenderCount, setDefenderCount] = useState(2);
+  const [attackerTroops, setAttackerTroops] = useState(
+    DEFAULT_BATTLE.attackerTroops,
+  );
+
+  const [defenderTroops, setDefenderTroops] = useState(
+    DEFAULT_BATTLE.defenderTroops,
+  );
+
+  const [attackerCount, setAttackerCount] = useState(
+    DEFAULT_BATTLE.attackerDice,
+  );
+
+  const [defenderCount, setDefenderCount] = useState(
+    DEFAULT_BATTLE.defenderDice,
+  );
+  const maxAttackerDice = getMaxAttackerDice(attackerTroops);
+  const maxDefenderDice = getMaxDefenderDice(defenderTroops);
+
   const [result, setResult] = useState<RollResult | null>(null);
   const [battleOver, setBattleOver] = useState(false);
 
   const t = translations[lang];
   const isRTL = lang === "fa";
 
-  const maxAttackerDice = Math.min(3, attackerTroops - 1);
-  const maxDefenderDice = Math.min(2, defenderTroops);
-
   const handleRoll = () => {
     if (battleOver) return;
-    const atkDice = Math.min(attackerCount, maxAttackerDice);
-    const defDice = Math.min(defenderCount, maxDefenderDice);
-    const attackerDice = rollDice(atkDice);
-    const defenderDice = rollDice(defDice);
-    const roll = compareRolls(attackerDice, defenderDice);
-    const newAttackerTroops = attackerTroops - roll.attackerLosses;
-    const newDefenderTroops = defenderTroops - roll.defenderLosses;
-    setAttackerTroops(newAttackerTroops);
-    setDefenderTroops(newDefenderTroops);
-    setResult(roll);
-    if (newDefenderTroops <= 0 || newAttackerTroops <= 1) setBattleOver(true);
+
+    const battle = playBattle({
+      attackerTroops,
+      defenderTroops,
+      attackerDiceCount: Math.min(attackerCount, maxAttackerDice),
+      defenderDiceCount: Math.min(defenderCount, maxDefenderDice),
+    });
+
+    setAttackerTroops(battle.attackerTroops);
+    setDefenderTroops(battle.defenderTroops);
+    setResult(battle.result);
+
+    setBattleOver(isBattleOver(battle.attackerTroops, battle.defenderTroops));
   };
 
   const handleReset = () => {
-    setAttackerTroops(10);
-    setDefenderTroops(10);
-    setAttackerCount(3);
-    setDefenderCount(2);
+    setAttackerTroops(DEFAULT_BATTLE.attackerTroops);
+    setDefenderTroops(DEFAULT_BATTLE.defenderTroops);
+    setAttackerCount(DEFAULT_BATTLE.attackerDice);
+    setDefenderCount(DEFAULT_BATTLE.defenderDice);
     setResult(null);
     setBattleOver(false);
   };
@@ -132,7 +122,6 @@ export default function RiskDiceRoller() {
 
   const bg = isDark ? "bg-black" : "bg-white";
   const textColor = isDark ? "text-white" : "text-black";
-  const card = isDark ? "bg-zinc-200" : "bg-zinc-900";
 
   return (
     <SafeAreaView className={`flex-1 p-5 ${bg}`}>
@@ -220,7 +209,9 @@ export default function RiskDiceRoller() {
                 isRTL ? "text-right" : ""
               }`}
             >
-              {defenderTroops <= 0 ? t.attackerWins : t.defenderWins}
+              {getWinner(attackerTroops, defenderTroops) === "attacker"
+                ? t.attackerWins
+                : t.defenderWins}
             </Text>
             <TouchableOpacity
               className="bg-[#2ecc71] w-full items-center py-4 rounded-full"
