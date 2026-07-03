@@ -17,6 +17,7 @@ type IconSymbolName = keyof typeof MAPPING;
  * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
  */
 const MAPPING = {
+  "bolt.fill": "bolt",
   "house.fill": "home",
 
   // Dice

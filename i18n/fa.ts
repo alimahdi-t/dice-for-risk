@@ -1,24 +1,25 @@
 export default {
   tabs: {
-    game: "بازی",
+    game: "کلاسیک",
+    blitz: "بلیتز",
     settings: "تنظیمات",
   },
 
   game: {
-    title: "⚔️ تاس ریسک",
+    title: "حالت کلاسیک",
     attacker: "🔴 مهاجم",
     defender: "🔵 مدافع",
-    troops: "سرباز",
-    attackerDice: "🔴 تاس مهاجم",
-    defenderDice: "🔵 تاس مدافع",
-    roll: "پرتاب تاس",
+    troops: "نیرو",
+    attackerDice: "🎲 تاس‌های مهاجم",
+    defenderDice: "🎲 تاس‌های مدافع",
+    roll: "ریختن تاس",
     newBattle: "نبرد جدید",
     attack: "🔴 حمله",
     defense: "🔵 دفاع",
-    defenderLoses: (n: number) => `🔴 مدافع ${n} سرباز از دست داد`,
-    attackerLoses: (n: number) => `🔵 مهاجم ${n} سرباز از دست داد`,
-    attackerWins: "🔴 مهاجم برنده شد!",
-    defenderWins: "🔵 مدافع برنده شد!",
+    defenderLoses: (n: number) => `🔴 مدافع ${n} نیرو از دست داد`,
+    attackerLoses: (n: number) => `🔵 مهاجم ${n} نیرو از دست داد`,
+    attackerWins: "🔴 مهاجم پیروز شد!",
+    defenderWins: "🔵 مدافع پیروز شد!",
     vs: "در برابر",
     lang: "English",
   },
@@ -26,14 +27,14 @@ export default {
     title: "تنظیمات",
 
     game: "بازی",
-    sound: "افکت صدا",
-    soundDesc: "صدای پرتاب تاس",
+    sound: "افکت‌های صوتی",
+    soundDesc: "صدای ریختن تاس",
 
     vibration: "لرزش",
     vibrationDesc: "بازخورد لمسی",
 
     appearance: "ظاهر",
-    dark: "تاریک",
+    dark: "تیره",
     light: "روشن",
 
     language: "زبان",
@@ -43,9 +44,10 @@ export default {
     about: "درباره",
     rules: "قوانین",
     privacy: "حریم خصوصی",
+    contact: "ارتباط با توسعه‌دهنده",
     version: "نسخه",
 
-    footer: "تاس ریسک",
+    footer: "Dice for Risk",
   },
 
   rulesPage: {
@@ -67,5 +69,25 @@ export default {
       "هیچ اطلاعاتی با شخص ثالث به اشتراک گذاشته نمی‌شود.",
       "از هیچ سرویس رهگیری یا تحلیل داده استفاده نمی‌شود.",
     ],
+  },
+  blitz: {
+    title: "حالت بلیتز",
+    blitz: "بلیتز",
+    attacker: "مهاجم",
+    defender: "مدافع",
+    troops: "نیرو",
+    rounds: "دور",
+    attackerWins: "مهاجم پیروز شد!",
+    defenderWins: "مدافع پیروز شد!",
+    newBattle: "نبرد جدید",
+  },
+
+  contact: {
+    title: "ارتباط با توسعه‌دهنده",
+    contact: "ارتباط",
+    email: "ایمیل",
+    github: "گیت‌هاب",
+    website: "وب‌سایت",
+    footer: "از استفاده از Dice for Risk متشکریم ❤️",
   },
 } as const;

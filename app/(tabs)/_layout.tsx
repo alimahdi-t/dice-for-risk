@@ -41,6 +41,7 @@ export default function TabLayout() {
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: "600",
+          marginBottom: 4,
         },
 
         sceneStyle: {
@@ -54,6 +55,16 @@ export default function TabLayout() {
           title: t.game,
           tabBarIcon: ({ color }) => (
             <IconSymbol name="dice.fill" size={24} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="blitz"
+        options={{
+          title: t.blitz,
+          tabBarIcon: ({ color }) => (
+            <IconSymbol name="bolt.fill" size={24} color={color} />
           ),
         }}
       />

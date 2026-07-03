@@ -96,11 +96,7 @@ export default function RiskDiceRoller() {
         showsVerticalScrollIndicator={false}
       >
         {/* Title */}
-        <Text
-          className={`text-2xl font-bold ${textColor} mb-6 ${
-            isRTL ? "text-right" : "text-center"
-          }`}
-        >
+        <Text className={`text-5xl font-bold mt-8 mb-8 ${textColor}`}>
           {t.title}
         </Text>
 
@@ -122,13 +118,13 @@ export default function RiskDiceRoller() {
             onIncrease={() => setAttackerTroops((n) => n + 1)}
           />
 
-          <Text
-            className={`text-[#e94560] text-lg font-bold ${
-              isRTL ? "text-right" : ""
-            }`}
-          >
-            {t.vs}
-          </Text>
+          {/*<Text*/}
+          {/*  className={`text-[#e94560] text-lg font-bold ${*/}
+          {/*    isRTL ? "text-right" : ""*/}
+          {/*  }`}*/}
+          {/*>*/}
+          {/*  {t.vs}*/}
+          {/*</Text>*/}
 
           {/* Defender */}
           <TroopCard

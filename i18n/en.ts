@@ -1,10 +1,11 @@
 export default {
   tabs: {
-    game: "Game",
+    game: "Classic",
+    blitz: "Blitz",
     settings: "Settings",
   },
   game: {
-    title: "⚔️ Risk Dice Roller",
+    title: "Classic mood",
     attacker: "🔴 Attacker",
     defender: "🔵 Defender",
     troops: "troops",
@@ -43,10 +44,11 @@ export default {
 
     about: "ABOUT",
     rules: "Rules",
-    privacy: "Privacy",
+    privacy: "Privacy Policy",
+    contact: "Contact Developer",
     version: "Version",
 
-    footer: "Risk Dice Roller",
+    footer: "Dice for Risk",
   },
 
   rulesPage: {
@@ -68,5 +70,26 @@ export default {
       "No data is shared with third parties.",
       "No analytics or tracking services are used.",
     ],
+  },
+  // en
+  blitz: {
+    title: "Blitz Mode",
+    blitz: "BLITZ",
+    attacker: "Attacker",
+    defender: "Defender",
+    troops: "Troops",
+    rounds: "Rounds",
+    attackerWins: "Attacker Wins!",
+    defenderWins: "Defender Wins!",
+    newBattle: "New Battle",
+  },
+
+  contact: {
+    title: "Contact Developer",
+    contact: "CONTACT",
+    email: "Email",
+    github: "GitHub",
+    website: "Website",
+    footer: "Thank you for using Dice for Risk ❤️",
   },
 } as const;

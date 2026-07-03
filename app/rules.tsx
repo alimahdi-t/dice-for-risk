@@ -15,7 +15,7 @@ export default function Rules() {
 
   return (
     <SafeAreaView
-      className="flex-1 bg-white dark:bg-black"
+      className="flex-1 pt-4 bg-white dark:bg-black"
       edges={["left", "right", "top"]}
       style={{ paddingHorizontal: 20 }}
     >

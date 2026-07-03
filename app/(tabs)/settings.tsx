@@ -119,6 +119,13 @@ export default function Settings() {
               onPress={() => router.push("/privacy")}
             />
 
+            <AboutRow
+              title={t.contact}
+              border
+              isRTL={isRTL}
+              onPress={() => router.push("/contact")}
+            />
+
             <AboutRow title={t.version} value="1.0.0" isRTL={isRTL} />
           </SettingsCard>
         </SettingsSection>
