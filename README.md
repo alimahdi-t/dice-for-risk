@@ -28,10 +28,10 @@
   <img src="assets/images/showcase/1.jpg" width="220" />
   <img src="assets/images/showcase/2.jpg" width="220" />
   <img src="assets/images/showcase/4.jpg" width="220" />
-  <img src="assets/images/showcase/5.jpg" width="220" />
+  <!-- <img src="assets/images/showcase/5.jpg" width="220" />
   <img src="assets/images/showcase/3.jpg" width="220" />
   <img src="assets/images/showcase/7.jpg" width="220" />
-  <img src="assets/images/showcase/8.jpg" width="220" />
+  <img src="assets/images/showcase/8.jpg" width="220" /> -->
 </div>
 
 ---
