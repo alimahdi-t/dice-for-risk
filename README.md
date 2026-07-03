@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
+<div align="center">
+  <h1>⚔️ Dice for Risk</h1>
+  <p>A mobile dice roller for the <strong>Risk</strong> board game, built with Expo & React Native.</p>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+  <img src="https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white" />
+  <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/NativeWind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+</div>
 
-## Get started
+---
 
-1. Install dependencies
+## 📸 Screenshots
 
-   ```bash
-   npm install
-   ```
+<!-- Add your screenshots to assets/images/ and update filenames below -->
 
-2. Start the app
+[//]: # (<div align="center">)
 
-   ```bash
-   npx expo start
-   ```
+[//]: # (  <img src="assets/images/1.jpg" width="220" />)
 
-In the output, you'll find options to open the app in a
+[//]: # (  <img src="assets/images/screenshot-roll.png" width="220" />)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+[//]: # (  <img src="assets/images/screenshot-fa.png" width="220" />)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+[//]: # (</div>)
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## ✨ Features
+
+- 🎲 Roll up to **3 attacker** and **2 defender** dice following official Risk rules
+- ⚖️ Automatic dice comparison — highest dice paired first, ties go to the defender
+- 🪖 **Troop counters** for both sides that decrease after every roll
+- 🏆 Battle-over detection with winner announcement and new battle reset
+- 🌐 **Bilingual** — English and Persian (فارسی) with full RTL layout
+- 📱 Scrollable full-width layout optimized for mobile
+
+---
+
+## 🛠 Tech Stack
+
+| Tool | Purpose |
+|---|---|
+| [Expo](https://expo.dev) + [Expo Router](https://expo.github.io/router) | Framework & file-based routing |
+| React Native + TypeScript | UI & type safety |
+| [NativeWind](https://www.nativewind.dev) | Tailwind CSS for React Native |
+| pnpm | Package manager |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- pnpm
+- Expo Go app on your phone (or iOS/Android simulator)
+
+### Installation
 
 ```bash
-npm run reset-project
+git clone https://github.com/alimahdi-t/dice-for-risk.git
+cd dice-for-risk
+pnpm install
+pnpm expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Scan the QR code with **Expo Go**, or press:
+- `i` → iOS Simulator
+- `a` → Android Emulator
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🎮 How It Works
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1. Set the number of troops for both attacker and defender
+2. Choose how many dice each side rolls (attacker: 1–3, defender: 1–2)
+3. Hit **Roll Dice** — dice are sorted highest-first and compared pair by pair
+4. Troops decrease automatically based on losses
+5. Battle ends when the defender hits 0 troops or the attacker is left with 1
 
-## Join the community
+> Ties always go to the **defender**, following the official Risk rules.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📁 Project Structure

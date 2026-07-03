@@ -48,9 +48,7 @@ export default function RootLayout() {
       <SettingsProvider>
         <ThemeSync />
         <AppLayout />
-        {!splashDone && (
-          <AnimatedSplash onFinish={() => setSplashDone(false)} />
-        )}
+        {!splashDone && <AnimatedSplash onFinish={() => setSplashDone(true)} />}
       </SettingsProvider>
     </SafeAreaProvider>
   );
