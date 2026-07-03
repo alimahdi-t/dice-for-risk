@@ -4,20 +4,19 @@ import "react-native-reanimated";
 import "./global.css";
 import { SettingsProvider, useSettings } from "@/context/settings-context";
 import { useColorScheme } from "nativewind";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AnimatedSplash } from "@/components/splash-screen";
 
 function ThemeSync() {
   const { theme } = useSettings();
   const { colorScheme, setColorScheme } = useColorScheme();
 
   useEffect(() => {
-    // console.log("syncing", theme);
     if (colorScheme !== theme) {
       setColorScheme(theme);
     }
   }, [theme, colorScheme]);
-  // console.log("nativewind:", colorScheme);
 
   return null;
 }
@@ -33,24 +32,25 @@ function AppLayout() {
         <Stack.Screen name="privacy" options={{ headerShown: false }} />
         <Stack.Screen
           name="modal"
-          options={{
-            presentation: "modal",
-            title: "Modal",
-          }}
+          options={{ presentation: "modal", title: "Modal" }}
         />
       </Stack>
-
       <StatusBar style={theme === "dark" ? "light" : "dark"} />
     </>
   );
 }
 
 export default function RootLayout() {
+  const [splashDone, setSplashDone] = useState(false);
+
   return (
     <SafeAreaProvider>
       <SettingsProvider>
         <ThemeSync />
         <AppLayout />
+        {!splashDone && (
+          <AnimatedSplash onFinish={() => setSplashDone(false)} />
+        )}
       </SettingsProvider>
     </SafeAreaProvider>
   );
