@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dice-for-risk",
+    "name": "Dice for risk",
     "slug": "dice-for-risk",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.seyyedalimehdi.diceforrisk"
     },
     "web": {
       "output": "static",
@@ -43,6 +44,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "684d3a9e-8d50-4ff7-9363-46d64d2b327b"
+      }
+    },
+    "owner": "seyyedalimehdi"
   }
 }
